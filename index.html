@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vesper’s Serendipity · 一夜限定酒单</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #14231d;      /* 深瓶绿 */
+    --ink: #f2ede3;         /* 纸白 */
+    --red: #c93b2e;         /* Campari 红 */
+    --brass: #b99a5f;       /* 黄铜 · 甜 */
+    --sage: #8fa294;        /* 灰绿 · 柑橘 */
+    --pale: rgba(242, 237, 227, 0.22); /* 苏打 · 茶 */
+    --hairline: rgba(242, 237, 227, 0.12);
+    --display: 'Italiana', 'Noto Serif SC', serif;
+    --serif: 'Noto Serif SC', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { background: var(--ground); }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+  }
+
+  .sheet {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 28px 64px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero { text-align: center; margin-bottom: 72px; }
+
+  .hero .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 26px;
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 8.5vw, 4.2rem);
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  .hero .sub {
+    margin-top: 18px;
+    font-size: 15px;
+    letter-spacing: 0.28em;
+    color: var(--sage);
+  }
+
+  .hero .meta {
+    margin-top: 30px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: rgba(242, 237, 227, 0.45);
+  }
+
+  .hero .rule {
+    width: 46px;
+    height: 1px;
+    background: var(--brass);
+    margin: 30px auto 0;
+  }
+
+  /* ---------- section ---------- */
+  section { margin-bottom: 64px; }
+
+  .sec-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+
+  .sec-head .zh {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+  }
+
+  .sec-head .en {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--sage);
+    text-align: right;
+  }
+
+  /* ---------- drink ---------- */
+  .drink {
+    padding: 26px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .drink:last-child { border-bottom: none; }
+
+  .drink .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .drink h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: 0.045em;
+    line-height: 1.15;
+  }
+
+  .dots { display: inline-flex; gap: 5px; flex-shrink: 0; transform: translateY(-2px); }
+  .dots i {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--red);
+    display: inline-block;
+  }
+  .dots i.on { background: var(--red); }
+
+  .build {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--sage);
+    margin-top: 7px;
+  }
+
+  /* 比例条 —— 每杯的实际构成，按 ml 等比 */
+  .pour {
+    display: flex;
+    height: 3px;
+    width: min(240px, 62%);
+    margin: 13px 0 11px;
+    gap: 2px;
+  }
+  .pour span { display: block; height: 100%; }
+  .pour .s { background: var(--ink); }      /* 烈酒 */
+  .pour .b { background: var(--red); }      /* 苦 */
+  .pour .w { background: var(--brass); }    /* 甜 */
+  .pour .c { background: var(--sage); }     /* 柑橘 */
+  .pour .l { background: var(--pale); }     /* 苏打 · 茶 */
+
+  .drink p {
+    font-size: 14.5px;
+    color: rgba(242, 237, 227, 0.78);
+    max-width: 54ch;
+  }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding-top: 34px;
+    text-align: center;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    color: rgba(242, 237, 227, 0.55);
+    margin-bottom: 26px;
+  }
+  .legend b {
+    display: inline-block;
+    width: 14px; height: 3px;
+    margin-right: 7px;
+    vertical-align: middle;
+    font-weight: normal;
+  }
+
+  .note {
+    font-size: 13.5px;
+    color: rgba(242, 237, 227, 0.66);
+    max-width: 46ch;
+    margin: 0 auto 30px;
+  }
+
+  .sign {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  /* ---------- motion ---------- */
+  .fade {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 0.9s ease forwards;
+  }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.18s; }
+  .d3 { animation-delay: 0.30s; }
+  .d4 { animation-delay: 0.42s; }
+  .d5 { animation-delay: 0.54s; }
+  .d6 { animation-delay: 0.66s; }
+  .d7 { animation-delay: 0.78s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade { animation: none; opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 480px) {
+    .sheet { padding: 52px 22px 48px; }
+    .drink h3 { font-size: 22px; }
+    .pour { width: 78%; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="hero fade d1">
+    <div class="eyebrow">One Night Only · 一夜限定</div>
+    <h1>Vesper’s Serendipity</h1>
+    <div class="sub">客 厅 酒 吧</div>
+    <div class="meta">SEATTLE · AUG 2026 &nbsp;/&nbsp; 鲜榨柑橘 · 手作柑橘皮糖 · 现制冷萃红茶</div>
+    <div class="rule"></div>
+  </header>
+
+  <!-- ═════════ PUNCH ═════════ -->
+  <section class="fade d2">
+    <div class="sec-head">
+      <span class="zh">迎宾</span>
+      <span class="en">Punch — Help Yourself</span>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Rum Punch</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i></i></span>
+      </div>
+      <div class="build">white rum · lime · black tea · oleo-saccharum</div>
+      <div class="pour">
+        <span class="s" style="flex:55"></span><span class="c" style="flex:20"></span><span class="w" style="flex:18"></span><span class="l" style="flex:70"></span>
+      </div>
+      <p>白朗姆、青柠与冷萃红茶。红茶的单宁给酸甜立起骨架，柑橘皮糖在尾段留下皮油香。自取，倒进加满冰的杯子——它比喝起来烈。</p>
+    </div>
+  </section>
+
+  <!-- ═════════ HIGHBALL ═════════ -->
+  <section class="fade d3">
+    <div class="sec-head">
+      <span class="zh">长饮</span>
+      <span class="en">Highballs — Order at the Bar</span>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Gin &amp; Tonic</h3>
+        <span class="dots"><i class="on"></i><i></i><i></i></span>
+      </div>
+      <div class="build">gin · tonic · lime</div>
+      <div class="pour">
+        <span class="s" style="flex:45"></span><span class="l" style="flex:135"></span>
+      </div>
+      <p>杜松子、清苦、气泡。永远正确。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Whiskey Highball</h3>
+        <span class="dots"><i class="on"></i><i></i><i></i></span>
+      </div>
+      <div class="build">bourbon · soda</div>
+      <div class="pour">
+        <span class="s" style="flex:45"></span><span class="l" style="flex:135"></span>
+      </div>
+      <p>波本兑苏打，谷物的甜被气泡摊开。干净利落。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Cuba Libre</h3>
+        <span class="dots"><i class="on"></i><i></i><i></i></span>
+      </div>
+      <div class="build">white rum · cola · lime wedge</div>
+      <div class="pour">
+        <span class="s" style="flex:45"></span><span class="l" style="flex:135"></span>
+      </div>
+      <p>朗姆、可乐、一角青柠。熟悉的甜里多一点酒气。</p>
+    </div>
+  </section>
+
+  <!-- ═════════ STIRRED ═════════ -->
+  <section class="fade d4">
+    <div class="sec-head">
+      <span class="zh">搅拌</span>
+      <span class="en">Stirred — Order at the Bar</span>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Negroni</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+      </div>
+      <div class="build">gin · campari · sweet vermouth &nbsp;—&nbsp; 30 / 30 / 30</div>
+      <div class="pour">
+        <span class="s" style="flex:30"></span><span class="b" style="flex:30"></span><span class="w" style="flex:30"></span>
+      </div>
+      <p>三等分的金酒、Campari 与甜味美思。苦、甜、植物香互不相让。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Boulevardier</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+      </div>
+      <div class="build">bourbon · campari · sweet vermouth &nbsp;—&nbsp; 45 / 25 / 25</div>
+      <div class="pour">
+        <span class="s" style="flex:45"></span><span class="b" style="flex:25"></span><span class="w" style="flex:25"></span>
+      </div>
+      <p>Negroni 的威士忌表亲。苦味被波本的暖意包住，轮廓更圆。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Manhattan</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+      </div>
+      <div class="build">bourbon · sweet vermouth · angostura &nbsp;—&nbsp; 60 / 25</div>
+      <div class="pour">
+        <span class="s" style="flex:60"></span><span class="w" style="flex:25"></span><span class="b" style="flex:3"></span>
+      </div>
+      <p>波本与甜味美思，苦精定骨架。酒感分明的一杯，适合慢慢喝。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Old Fashioned</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+      </div>
+      <div class="build">bourbon · sugar · angostura · lemon peel &nbsp;—&nbsp; 60 / 8</div>
+      <div class="pour">
+        <span class="s" style="flex:60"></span><span class="w" style="flex:8"></span><span class="b" style="flex:3"></span>
+      </div>
+      <p>威士忌的本味。糖与苦精只做衬托，柠檬皮油点睛。</p>
+    </div>
+  </section>
+
+  <!-- ═════════ SHAKEN ═════════ -->
+  <section class="fade d5">
+    <div class="sec-head">
+      <span class="zh">摇制</span>
+      <span class="en">Shaken — Order at the Bar</span>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Daiquiri</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i></i></span>
+      </div>
+      <div class="build">white rum · lime · sugar &nbsp;—&nbsp; 60 / 22 / 15</div>
+      <div class="pour">
+        <span class="s" style="flex:60"></span><span class="c" style="flex:22"></span><span class="w" style="flex:15"></span>
+      </div>
+      <p>朗姆、青柠、糖。三样东西的教科书，明亮见底。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Gimlet</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i></i></span>
+      </div>
+      <div class="build">gin · lime · sugar &nbsp;—&nbsp; 60 / 22 / 15</div>
+      <div class="pour">
+        <span class="s" style="flex:60"></span><span class="c" style="flex:22"></span><span class="w" style="flex:15"></span>
+      </div>
+      <p>金酒版的酸甜直球，杜松子在青柠里更清晰。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Whiskey Sour</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i></i></span>
+      </div>
+      <div class="build">bourbon · lemon · sugar &nbsp;—&nbsp; 60 / 22 / 15</div>
+      <div class="pour">
+        <span class="s" style="flex:60"></span><span class="c" style="flex:22"></span><span class="w" style="flex:15"></span>
+      </div>
+      <p>柠檬的圆酸垫着波本。可加 Angostura 浮顶，多一层香料气。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Whiskey Smash</h3>
+        <span class="dots"><i class="on"></i><i class="on"></i><i></i></span>
+      </div>
+      <div class="build">bourbon · lemon · sugar · mint &nbsp;—&nbsp; 60 / 22 / 15</div>
+      <div class="pour">
+        <span class="s" style="flex:60"></span><span class="c" style="flex:22"></span><span class="w" style="flex:15"></span>
+      </div>
+      <p>拍碎的薄荷裹着波本与柠檬。夏天喝威士忌的方式。</p>
+    </div>
+  </section>
+
+  <!-- ═════════ LOW ═════════ -->
+  <section class="fade d6">
+    <div class="sec-head">
+      <span class="zh">低度</span>
+      <span class="en">Low &amp; Easy — Anytime</span>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Americano</h3>
+        <span class="dots"><i class="on"></i><i></i><i></i></span>
+      </div>
+      <div class="build">campari · sweet vermouth · soda &nbsp;—&nbsp; 30 / 30 / 90</div>
+      <div class="pour">
+        <span class="b" style="flex:30"></span><span class="w" style="flex:30"></span><span class="l" style="flex:90"></span>
+      </div>
+      <p>微苦开胃，几乎不上头。中场想减速的时候点它。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Campari Soda</h3>
+        <span class="dots"><i class="on"></i><i></i><i></i></span>
+      </div>
+      <div class="build">campari · soda · lemon peel &nbsp;—&nbsp; 45 / 120</div>
+      <div class="pour">
+        <span class="b" style="flex:45"></span><span class="l" style="flex:120"></span>
+      </div>
+      <p>全场最轻的一杯。苦味、气泡、一片柠檬皮的事。</p>
+    </div>
+  </section>
+
+  <!-- ═════════ ZERO PROOF ═════════ -->
+  <section class="fade d7">
+    <div class="sec-head">
+      <span class="zh">无酒精</span>
+      <span class="en">Zero Proof — Anytime</span>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Tea Sour</h3>
+        <span class="dots"><i></i><i></i><i></i></span>
+      </div>
+      <div class="build">strong black tea · lemon · sugar &nbsp;—&nbsp; 60 / 22 / 18 · shaken</div>
+      <div class="pour">
+        <span class="l" style="flex:60"></span><span class="c" style="flex:22"></span><span class="w" style="flex:18"></span>
+      </div>
+      <p>浓红茶顶替烈酒的位置，单宁撑起骨架，和真的 Sour 一样摇出泡沫。全场唯一无酒精的摇制出品。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Nojito</h3>
+        <span class="dots"><i></i><i></i><i></i></span>
+      </div>
+      <div class="build">mint · lime · sugar · soda</div>
+      <div class="pour">
+        <span class="c" style="flex:22"></span><span class="w" style="flex:15"></span><span class="l" style="flex:120"></span>
+      </div>
+      <p>薄荷、青柠与气泡，Mojito 少了朗姆之后依然成立的部分。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Arnold Palmer</h3>
+        <span class="dots"><i></i><i></i><i></i></span>
+      </div>
+      <div class="build">black tea · lemon · sugar &nbsp;—&nbsp; built over ice</div>
+      <div class="pour">
+        <span class="l" style="flex:90"></span><span class="c" style="flex:22"></span><span class="w" style="flex:15"></span>
+      </div>
+      <p>冷红茶兑手打柠檬水。美国乡村俱乐部的老规矩，直给的解渴。</p>
+    </div>
+
+    <div class="drink">
+      <div class="row">
+        <h3>Citrus Cordial Soda</h3>
+        <span class="dots"><i></i><i></i><i></i></span>
+      </div>
+      <div class="build">oleo-saccharum · lime · soda</div>
+      <div class="pour">
+        <span class="w" style="flex:20"></span><span class="c" style="flex:10"></span><span class="l" style="flex:130"></span>
+      </div>
+      <p>柑橘皮糖化开在苏打里，皮油的香气比果汁更立体。今晚现做的那一份。</p>
+    </div>
+  </section>
+
+  <!-- ═════════ FOOTER ═════════ -->
+  <footer class="fade d7">
+    <div class="legend">
+      <span><b style="background:var(--ink)"></b>烈酒</span>
+      <span><b style="background:var(--red)"></b>苦</span>
+      <span><b style="background:var(--brass)"></b>甜</span>
+      <span><b style="background:var(--sage)"></b>柑橘</span>
+      <span><b style="background:var(--pale)"></b>苏打 · 茶</span>
+    </div>
+    <p class="note">
+      所有摇制酒都可以：换基酒、加苏打拉长（Collins / Mojito）、
+      加薄荷、或换成 Campari 苦味版本。把口味告诉吧台，剩下的交给我。
+    </p>
+    <div class="sign">Bartender — Vesper</div>
+  </footer>
+
+</div>
+</body>
+</html>

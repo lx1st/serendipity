@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Bar Ops · 内部手册</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground:#14231d; --ink:#f2ede3; --red:#c93b2e; --brass:#b99a5f;
+    --sage:#8fa294; --hairline:rgba(242,237,227,.12);
+    --mono:'IBM Plex Mono',monospace; --serif:'Noto Serif SC',serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.65;font-size:14px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:34px 18px 60px}
+
+  h1{font-family:'Italiana',var(--serif);font-weight:400;font-size:30px;letter-spacing:.05em;text-align:center}
+  .tag{text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--red);text-transform:uppercase;margin:8px 0 22px}
+
+  nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:34px}
+  nav a{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--sage);text-decoration:none;border:1px solid var(--hairline);border-radius:999px;padding:5px 12px}
+  nav a:active{color:var(--ink);border-color:var(--sage)}
+
+  h2{font-size:16px;font-weight:600;letter-spacing:.16em;border-bottom:1px solid var(--hairline);padding-bottom:8px;margin:40px 0 14px;display:flex;justify-content:space-between;align-items:baseline}
+  h2 .en{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--sage);text-transform:uppercase;font-weight:400}
+  h3{font-size:13.5px;font-weight:600;color:var(--brass);margin:20px 0 8px;letter-spacing:.06em}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--sage);text-align:left;font-weight:400;padding:5px 8px 5px 0;border-bottom:1px solid var(--hairline)}
+  td{padding:7px 8px 7px 0;border-bottom:1px solid rgba(242,237,227,.06);vertical-align:top}
+  td:first-child{white-space:nowrap;font-weight:600}
+  .mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em}
+  .spec{font-family:var(--mono);color:var(--brass)}
+
+  .card{border:1px solid var(--hairline);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .card.alert{border-color:rgba(201,59,46,.5)}
+  .card .t{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+  p{color:rgba(242,237,227,.82);margin:6px 0}
+  ul,ol{padding-left:18px;color:rgba(242,237,227,.82)}
+  li{margin:5px 0}
+  b{color:var(--ink)}
+  .dim{color:var(--sage);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Vesper&rsquo;s Serendipity</h1>
+  <div class="tag">Bar Ops · 仅调酒师</div>
+
+  <nav>
+    <a href="#spec">配比速查</a>
+    <a href="#hidden">隐藏款</a>
+    <a href="#batch">Punch/Oleo</a>
+    <a href="#shop">采购</a>
+    <a href="#prep">准备流程</a>
+    <a href="#ops">运营</a>
+  </nav>
+
+  <!-- ═══ 配比速查 ═══ -->
+  <h2 id="spec">配比速查 <span class="en">House Specs</span></h2>
+
+  <div class="card">
+    <div class="t">酸酒母版 · 摇制</div>
+    <p class="spec" style="font-size:17px">60 基酒 / 22 柑橘 / 15 rich syrup</p>
+    <p class="dim">加冰摇 10–12 秒，双重过滤进加冰的杯子。Tea Sour 糖提到 18。</p>
+  </div>
+
+  <h3>搅拌类（杯中直调 · 搅 20–30 转 · 挤皮油）</h3>
+  <table>
+    <tr><th>酒</th><th>配方 (ml)</th></tr>
+    <tr><td>Negroni</td><td class="mono">gin 30 / campari 30 / 甜味美思 30</td></tr>
+    <tr><td>Boulevardier</td><td class="mono">bourbon 45 / campari 25 / 味美思 25</td></tr>
+    <tr><td>朗姆 Negroni</td><td class="mono">白朗姆 30 / campari 30 / 味美思 30</td></tr>
+    <tr><td>Manhattan</td><td class="mono">bourbon 60 / 味美思 25 / ango 2 滴</td></tr>
+    <tr><td>Sweet Martini</td><td class="mono">gin 50 / 味美思 25 / ango 1 滴</td></tr>
+    <tr><td>Old Fashioned</td><td class="mono">bourbon 60 / syrup 8 / ango 3 滴 / 柠皮</td></tr>
+    <tr><td>朗姆 O.F.</td><td class="mono">白朗姆 60 / syrup 10 / ango 2 滴 / 青柠皮</td></tr>
+    <tr><td>Americano</td><td class="mono">campari 30 / 味美思 30 / 苏打 90</td></tr>
+    <tr><td>Campari Soda</td><td class="mono">campari 45 / 苏打 120 / 柠皮</td></tr>
+  </table>
+
+  <h3>长饮（杯中直调）</h3>
+  <p class="mono dim">基酒 45 + 软饮 135 —— G&amp;T / Highball / Cuba Libre（+青柠角）</p>
+
+  <h3>无酒精</h3>
+  <table>
+    <tr><td>Tea Sour</td><td class="mono">浓红茶 60 / 柠檬 22 / syrup 18 · 摇制</td></tr>
+    <tr><td>Nojito</td><td class="mono">薄荷 6–8 片拍 / 青柠 22 / syrup 15 / 苏打 120</td></tr>
+    <tr><td>Arnold Palmer</td><td class="mono">红茶 90 / 柠檬 22 / syrup 15</td></tr>
+    <tr><td>Cordial Soda</td><td class="mono">无酒精份 oleo 20 / 青柠 10 / 苏打 130</td></tr>
+  </table>
+  <div class="card alert">
+    <div class="t">Angostura = 44.7% ABV</div>
+    <p>严格戒酒 / 孕期 / 宗教原因 → 无酒精出品<b>一律不加苦精</b>。只是今晚不喝的人，浮 2 滴无碍（约 0.3% ABV）。默认先问。</p>
+  </div>
+
+  <!-- ═══ 隐藏款 ═══ -->
+  <h2 id="hidden">隐藏款 <span class="en">Off-Menu</span></h2>
+  <p class="dim">公开酒单只放原型。以下通过对话出品。</p>
+
+  <h3>五条变化轴</h3>
+  <table>
+    <tr><td>换柑橘</td><td>青柠 ↔ 柠檬</td></tr>
+    <tr><td>拆基酒</td><td class="mono">60 → 基酒 45 + campari 15（配比不变）</td></tr>
+    <tr><td>加长</td><td class="mono">摇好后兑苏打 60–90 → Collins / Fizz</td></tr>
+    <tr><td>薄荷</td><td>拍打或轻捣</td></tr>
+    <tr><td>表面</td><td class="mono">浮 ango 4 滴 ／ 杯底沉 campari 10</td></tr>
+  </table>
+
+  <h3>组合全表</h3>
+  <table>
+    <tr><th>基酒</th><th>变化</th><th>名称</th></tr>
+    <tr><td>Gin</td><td class="mono">柠檬版</td><td>Gin Sour</td></tr>
+    <tr><td>Gin</td><td class="mono">柠檬 + 苏打 90</td><td>Tom Collins</td></tr>
+    <tr><td>Gin</td><td class="mono">青柠 + 薄荷</td><td>Southside</td></tr>
+    <tr><td>Gin</td><td class="mono">拆基酒（柠檬）</td><td>苦味 Gin Sour</td></tr>
+    <tr><td>朗姆</td><td class="mono">青柠 + 薄荷 + 苏打 90</td><td>Mojito</td></tr>
+    <tr><td>朗姆</td><td class="mono">拆基酒（青柠）</td><td>苦味 Daiquiri</td></tr>
+    <tr><td>朗姆</td><td class="mono">柠檬 + ango 浮</td><td>Rum Sour</td></tr>
+    <tr><td>Bourbon</td><td class="mono">ango 浮</td><td>Angostura Sour</td></tr>
+    <tr><td>Bourbon</td><td class="mono">柠檬 + 薄荷</td><td>Whiskey Smash</td></tr>
+    <tr><td>Bourbon</td><td class="mono">拆基酒</td><td>苦味 Whiskey Sour</td></tr>
+    <tr><td>Bourbon</td><td class="mono">柠檬 + 苏打 90</td><td>Whiskey Collins</td></tr>
+  </table>
+  <p class="dim">"苦味"系列是 Campari 近似版，口头推荐不冒充经典（Jasmine 原方用 Cointreau，Old Pal 原方 rye + 干味美思 + 搅拌）。</p>
+
+  <h3>点单话术</h3>
+  <ol>
+    <li>"Gin、朗姆还是威士忌？"</li>
+    <li>"酸一点还是苦一点？"（→ 摇制 / 搅拌）</li>
+    <li>"清爽还是浓？"（→ 加长 / 原型）</li>
+  </ol>
+
+  <!-- ═══ Punch / Oleo ═══ -->
+  <h2 id="batch">Punch &amp; Oleo <span class="en">Batch</span></h2>
+
+  <h3>Rum Punch（7 杯 · 约 1.1L）</h3>
+  <table>
+    <tr><td>白朗姆</td><td class="mono">375ml</td></tr>
+    <tr><td>青柠汁</td><td class="mono">125ml</td></tr>
+    <tr><td>Rich syrup</td><td class="mono">75ml（另 50ml 已在 oleo 里，合计 125）</td></tr>
+    <tr><td>Oleo（punch 份）</td><td class="mono">全部，连皮</td></tr>
+    <tr><td>冷红茶</td><td class="mono">500ml</td></tr>
+    <tr><td>Angostura</td><td class="mono">8 滴</td></tr>
+  </table>
+  <p><b>不加冰、不加气泡水</b>，装空苏打瓶冷藏。客人倒进加冰的杯子；要气泡自己补 30ml 苏打。约 13% ABV，开场提醒一句。喝完可按剩料兑第二批半量。</p>
+
+  <h3>Oleo-saccharum ×2</h3>
+  <ul>
+    <li><b>Punch 份</b>：6 青柠 + 2 柠檬的皮 + 50ml syrup</li>
+    <li><b>无酒精份</b>：另 3–4 个果子的皮 + 30ml syrup</li>
+    <li>只削带色表层，带白瓤会苦；静置 30 分钟自行萃取</li>
+  </ul>
+
+  <!-- ═══ 采购 ═══ -->
+  <h2 id="shop">采购清单 <span class="en">Shopping</span></h2>
+  <table>
+    <tr><th>品项</th><th>数量</th><th>备注</th></tr>
+    <tr><td>London Dry Gin</td><td class="mono">375ml</td><td>用量最小</td></tr>
+    <tr><td>白朗姆</td><td class="mono">750ml</td><td>375 进 punch</td></tr>
+    <tr><td>Bourbon</td><td class="mono">750ml</td><td>消耗最大</td></tr>
+    <tr><td>Campari</td><td class="mono">375ml</td><td>够用</td></tr>
+    <tr><td>甜味美思</td><td class="mono">375ml</td><td>剩余约 225ml</td></tr>
+    <tr><td>苏打水</td><td class="mono">2L</td><td>小瓶装；留空瓶装 punch</td></tr>
+    <tr><td>Tonic</td><td class="mono">1L</td><td>小瓶装</td></tr>
+    <tr><td>可乐</td><td class="mono">500ml</td><td></td></tr>
+    <tr><td>红茶包</td><td class="mono">8 包</td><td>500ml punch + 500ml 加倍浓</td></tr>
+    <tr><td>青柠</td><td class="mono">14 个</td><td>汁 + 皮 + 角</td></tr>
+    <tr><td>柠檬</td><td class="mono">8 个</td><td>威士忌线瓶颈</td></tr>
+    <tr><td>薄荷</td><td class="mono">1 把</td><td>Smash/Mojito/Southside/Nojito</td></tr>
+    <tr><td><b>袋装冰</b></td><td class="mono">5–6 kg</td><td>泡沫箱；最易短缺</td></tr>
+    <tr><td>一次性杯</td><td class="mono">25–30</td><td>350ml 硬质，统一杯型</td></tr>
+  </table>
+
+  <h3>从家带</h3>
+  <p class="mono dim">rich syrup 300ml · angostura · shaker · hawthorne 滤网 · jigger · 吧勺 · 手压榨汁器 · 削皮刀 · 砧板</p>
+
+  <!-- ═══ 准备流程 ═══ -->
+  <h2 id="prep">到场准备 <span class="en">~30 min</span></h2>
+  <ol>
+    <li><b>泡茶（最先做，关键路径）</b>：4 包泡 500ml 给 punch；4 包泡 500ml <b>加倍浓</b>给无酒精线。放凉。冰入保温箱。</li>
+    <li><b>削皮 ×2 份 oleo</b>：见上。</li>
+    <li><b>榨汁切角</b>：青柠汁 125（punch）+ 70（手摇）；柠檬汁约 110。<b>分开装</b>。切 3 青柠成角，另削 4–5 条柠檬皮备用。</li>
+    <li><b>混 punch</b>（茶凉透后），装瓶冷藏。</li>
+    <li><b>搭台</b>：punch 自助区 = 冰桶 + 杯子 + punch 瓶 + 苏打；其余全部集中在你的操作位。</li>
+  </ol>
+
+  <!-- ═══ 运营 ═══ -->
+  <h2 id="ops">运营提示 <span class="en">Service</span></h2>
+  <ul>
+    <li><b>先搅后摇</b>：同时来单，先出搅拌类（不占 shaker）。</li>
+    <li>柑橘汁 4 小时后衰减；超过 5 小时留果子中途再榨。</li>
+    <li>你手上约 13 杯，单杯 30 秒上下。</li>
+    <li>甜味美思开瓶后冷藏，一个月内风味下滑——提醒朋友尽快用掉或直接送他 Americano 配方。</li>
+  </ul>
+
+</div>
+</body>
+</html>
